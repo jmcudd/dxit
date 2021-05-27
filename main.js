@@ -20,7 +20,7 @@ if (!options.file && !options.directory) {
   const express = require("express");
   const morgan = require("morgan");
   const app = express();
-  app.use(morgan("tiny"));
+  app.use(morgan("short"));
 
   if (options.file) {
     app.get("/", function (req, res) {
