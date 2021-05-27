@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 "use strict";
-
+var pjson = require("../package.json");
 const path = require("path");
 const cli = require("cli");
 
@@ -9,9 +9,15 @@ const options = cli.parse({
   file: ["f", "File to share", "file"],
   directory: ["d", "Directory to share", "dir"],
   port: ["p", "Network port to use", "int", 3000],
-  subdomain: ["s", "Subdomain for your link", "string"]
+  subdomain: ["s", "Subdomain for your link", "string"],
+  version: ["v", "dxit version number"]
 });
-console.log(options);
+
+if (options.version) {
+  console.log();
+  cli.info(`dxit version: ${pjson.version}`);
+  process.exit(1)
+}
 
 if (!options.file && !options.directory) {
   cli.fatal("Specify a --file or --directory");

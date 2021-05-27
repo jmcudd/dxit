@@ -32,7 +32,8 @@
     "dxit": "./bin/main.js"
   },
   "files": [
-    "bin/"
+    "bin/",
+    "package.json"
   ],
   "devDependencies": {
     "@babel/cli": "^7.14.3",
