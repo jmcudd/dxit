@@ -1,4 +1,7 @@
 #! /usr/bin/env node
+
+"use strict";
+
 console.log("running program");
 const path = require("path");
 const ngrok = require("ngrok");
