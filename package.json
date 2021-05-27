@@ -1,0 +1,20 @@
+{
+  "name": "sharenow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "John Cudd",
+  "license": "MIT",
+  "dependencies": {
+    "cli": "^1.0.1",
+    "express": "^4.17.1",
+    "ngrok": "^4.0.1",
+    "serve-index": "^1.9.1"
+  },
+  "bin": {
+    "sharenow": "./main.js"
+  }
+}
