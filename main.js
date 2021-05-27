@@ -2,25 +2,26 @@
 
 "use strict";
 
-console.log("running program");
 const path = require("path");
-const ngrok = require("ngrok");
 const cli = require("cli");
 
 const options = cli.parse({
   file: ["f", "File to share", "file"],
   directory: ["d", "Directory to share", "dir"],
-  port: ["p", "Network port to use", "int", 3000]
+  port: ["p", "Network port to use", "int", 3000],
+  subdomain: ["s", "Subdomain for your link", 'string']
 });
+console.log(options);
 
 if (!options.file && !options.directory) {
   cli.fatal("Specify a --file or --directory");
 }
 (async function () {
-  const url = await ngrok.connect({ port: options.port });
-
   const express = require("express");
+  const morgan = require('morgan');
   const app = express();
+  app.use(morgan('tiny'));
+
   if (options.file) {
     app.get("/", function (req, res) {
       res.sendFile(path.resolve(options.file));
@@ -31,10 +32,16 @@ if (!options.file && !options.directory) {
     app.use("/", serveIndex(path.resolve(options.directory)));
   }
 
+  const localtunnel = require("localtunnel");
+  const tunnel = await localtunnel({
+    port: options.port,
+    subdomain: options.subdomain || "dxit"
+  });
+
   app.listen(options.port, function () {
     cli.info(`Server is running`);
     cli.info(`Monitor: http://127.0.0.1:4040/inspect/http`);
     cli.info(`Locally: http://localhost:${options.port}`);
-    cli.info(`Publicly: ${url}`);
+    cli.info(`Publicly: ${tunnel.url}`);
   });
 })();
