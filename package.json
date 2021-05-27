@@ -1,6 +1,6 @@
 {
   "name": "dxit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -18,7 +18,13 @@
     "type": "git",
     "url": "https://github.com/jmcudd/dxit.git"
   },
-  "keywords": ["share", "host", "transfer", "files", "directories"],
+  "keywords": [
+    "share",
+    "host",
+    "transfer",
+    "files",
+    "directories"
+  ],
   "bin": {
     "dxit": "./main.js"
   }
