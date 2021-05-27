@@ -2,17 +2,45 @@
 
 Very simple way of sharing a file or directory with a friend instantly
 
-## Usage
+## Example Usage
 
 ```
-npx dxit -f myface.jpeg
-npx dxit -d ./myphotos
-npx dxit -p 7000 -f myface.jpeg
-npx dxit -f myface.jpeg
+dxit -f myface.jpeg
+dxit -d ./myphotos
+dxit -p 7000 -f myface.jpeg
+dxit -f myface.jpeg
+dxit -f myface.jpeg -s "Cool Subdomain"
+```
+
+## Options
+
+```
+Usage:
+  dxit [OPTIONS] [ARGS]
+
+Options: 
+  -f, --file FILE        File to share
+  -d, --directory DIR    Directory to share
+  -p, --port [NUMBER]    Network port to use (Default is 3000)
+  -s, --subdomain STRING Subdomain for your link
+  -v, --version          dxit version number
+  -h, --help             Display help and usage details
+```
+
+## Install
+
+```
+npm install -g dxit
 ```
 
 ## Run via NPX
 
 ```
 npx dxit -d ./mystuff
+```
+
+## Get Help
+
+```
+dxit -h
 ```
