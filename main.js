@@ -9,7 +9,7 @@ const options = cli.parse({
   file: ["f", "File to share", "file"],
   directory: ["d", "Directory to share", "dir"],
   port: ["p", "Network port to use", "int", 3000],
-  subdomain: ["s", "Subdomain for your link", 'string']
+  subdomain: ["s", "Subdomain for your link", "string"]
 });
 console.log(options);
 
@@ -18,9 +18,9 @@ if (!options.file && !options.directory) {
 }
 (async function () {
   const express = require("express");
-  const morgan = require('morgan');
+  const morgan = require("morgan");
   const app = express();
-  app.use(morgan('tiny'));
+  app.use(morgan("tiny"));
 
   if (options.file) {
     app.get("/", function (req, res) {
@@ -39,8 +39,7 @@ if (!options.file && !options.directory) {
   });
 
   app.listen(options.port, function () {
-    cli.info(`Server is running`);
-    cli.info(`Monitor: http://127.0.0.1:4040/inspect/http`);
+    cli.info(`Server is running:`);
     cli.info(`Locally: http://localhost:${options.port}`);
     cli.info(`Publicly: ${tunnel.url}`);
   });
