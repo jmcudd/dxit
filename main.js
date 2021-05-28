@@ -10,18 +10,21 @@ const options = cli.parse({
   directory: ["d", "Directory to share", "dir"],
   port: ["p", "Network port to use", "int", 3000],
   subdomain: ["s", "Subdomain for your link", "string"],
-  version: ["v", "dxit version number"]
+  version: ["v", "dxit version number"],
+  quota: ["q", "Max number of downloads", "int", -1]
 });
 
 if (options.version) {
   console.log();
   cli.info(`dxit version: ${pjson.version}`);
-  process.exit(1)
+  process.exit(1);
 }
 
 if (!options.file && !options.directory) {
   cli.fatal("Specify a --file or --directory");
 }
+
+let hits = 0;
 (async function () {
   const express = require("express");
   const morgan = require("morgan");
@@ -30,7 +33,17 @@ if (!options.file && !options.directory) {
 
   if (options.file) {
     app.get("/", function (req, res) {
-      res.sendFile(path.resolve(options.file));
+      if (options.quota > 0) {
+        if (hits >= options.quota) {
+          cli.info(`Quota Reached: Downloaded ${hits} time(s)`);
+          res.sendStatus(401)
+        } else {
+          hits = hits + 1;
+          res.sendFile(path.resolve(options.file));
+        }
+      } else {
+        res.sendFile(path.resolve(options.file));
+      }
     });
   } else if (options.directory) {
     const serveIndex = require("serve-index");
