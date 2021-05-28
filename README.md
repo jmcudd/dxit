@@ -15,6 +15,7 @@ dxit -f myface.jpeg -s "Cool Subdomain"
 ## Options
 
 ```
+dxit -h
 Usage:
   dxit [OPTIONS] [ARGS]
 
@@ -24,6 +25,8 @@ Options:
   -p, --port [NUMBER]    Network port to use (Default is 3000)
   -s, --subdomain STRING Subdomain for your link
   -v, --version          dxit version number
+  -q, --quota [NUMBER]   Max number of downloads (Default is -1)
+  -t, --token            Require token
   -h, --help             Display help and usage details
 ```
 
