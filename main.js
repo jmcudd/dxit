@@ -4,6 +4,7 @@
 var pjson = require("../package.json");
 const path = require("path");
 const cli = require("cli");
+const uuidv4 = require("uuid").v4;
 
 const options = cli.parse({
   file: ["f", "File to share", "file"],
@@ -11,7 +12,8 @@ const options = cli.parse({
   port: ["p", "Network port to use", "int", 3000],
   subdomain: ["s", "Subdomain for your link", "string"],
   version: ["v", "dxit version number"],
-  quota: ["q", "Max number of downloads", "int", -1]
+  quota: ["q", "Max number of downloads", "int", -1],
+  token: ["t", "Require token"]
 });
 
 if (options.version) {
@@ -23,6 +25,7 @@ if (options.version) {
 if (!options.file && !options.directory) {
   cli.fatal("Specify a --file or --directory");
 }
+const token = uuidv4();
 
 let hits = 0;
 (async function () {
@@ -31,12 +34,24 @@ let hits = 0;
   const app = express();
   app.use(morgan("short"));
 
+  app.get("*", function (req, res, next) {
+    if (options.token) {
+      if (req.query.token == token) {
+        next();
+      } else {
+        res.sendStatus(401);
+      }
+    } else {
+      next();
+    }
+  });
+
   if (options.file) {
     app.get("/", function (req, res) {
       if (options.quota > 0) {
         if (hits >= options.quota) {
           cli.info(`Quota Reached: Downloaded ${hits} time(s)`);
-          res.sendStatus(401)
+          res.sendStatus(401);
         } else {
           hits = hits + 1;
           res.sendFile(path.resolve(options.file));
@@ -59,7 +74,11 @@ let hits = 0;
 
   app.listen(options.port, function () {
     cli.info(`Server is running:`);
-    cli.info(`Locally: http://localhost:${options.port}`);
-    cli.info(`Publicly: ${tunnel.url}`);
+    cli.info(
+      `Locally: http://localhost:${options.port}/${
+        options.token ? `?token=${token}` : ""
+      }`
+    );
+    cli.info(`Publicly: ${tunnel.url}/${options.token ? `?token=${token}` : ""}`);
   });
 })();
