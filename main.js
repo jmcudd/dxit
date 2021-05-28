@@ -29,6 +29,8 @@ const token = uuidv4();
 
 let hits = 0;
 (async function () {
+  const getPort = require('get-port');
+  const port=await getPort({port: options.port})
   const express = require("express");
   const morgan = require("morgan");
   const app = express();
@@ -68,14 +70,14 @@ let hits = 0;
 
   const localtunnel = require("localtunnel");
   const tunnel = await localtunnel({
-    port: options.port,
+    port: port,
     subdomain: options.subdomain || "dxit"
   });
 
-  app.listen(options.port, function () {
+  app.listen(port, function () {
     cli.info(`Server is running:`);
     cli.info(
-      `Locally: http://localhost:${options.port}/${
+      `Locally: http://localhost:${port}/${
         options.token ? `?token=${token}` : ""
       }`
     );
