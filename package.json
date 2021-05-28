@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node main.js",
     "build": "babel main.js -d bin",
-    "publish":"npm run build; npm publish"
+    "pub":"npm run build; npm publish"
   },
   "author": "John Cudd",
   "license": "MIT",
