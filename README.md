@@ -15,7 +15,6 @@ dxit -f myface.jpeg -s "Cool Subdomain"
 ## Options
 
 ```
-dxit -h
 Usage:
   dxit [OPTIONS] [ARGS]
 
