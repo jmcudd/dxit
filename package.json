@@ -1,12 +1,12 @@
 {
   "name": "dxit",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
     "build": "babel main.js -d bin",
-    "pub":"npm run build; npm publish"
+    "pub": "npm run build; npm publish"
   },
   "author": "John Cudd",
   "license": "MIT",
